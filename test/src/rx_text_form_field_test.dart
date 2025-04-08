@@ -16,7 +16,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      final model = ReactiveModel<String>('initial text');
+      final model = ObservableValue<String>('initial text');
 
       // Act
       await tester.pumpWidget(
@@ -41,7 +41,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      final model = ReactiveModel<String>('initial text');
+      final model = ObservableValue<String>('initial text');
 
       await tester.pumpWidget(
         MaterialApp(
@@ -68,7 +68,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      final model = ReactiveModel<String>('initial text');
+      final model = ObservableValue<String>('initial text');
 
       await tester.pumpWidget(
         MaterialApp(
@@ -94,7 +94,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      final model = ReactiveModel<TestUser>(
+      final model = ObservableValue<TestUser>(
         TestUser(username: 'user', password: 'pass'),
       );
 
@@ -136,7 +136,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      final model = ReactiveModel<String>('');
+      final model = ObservableValue<String>('');
       final formKey = GlobalKey<FormState>();
 
       await tester.pumpWidget(
@@ -178,7 +178,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      final model = ReactiveModel<String>('initial');
+      final model = ObservableValue<String>('initial');
       final formKey = GlobalKey<FormState>();
       String? savedValue;
 

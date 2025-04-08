@@ -7,12 +7,12 @@ import 'package:flutter/foundation.dart';
 /// like custom data models and maps.
 ///
 /// Type parameter [T] represents the type of data being wrapped.
-class ReactiveModel<T> extends ChangeNotifier {
+class ObservableValue<T> extends ChangeNotifier {
   /// The data being wrapped by this reactive model.
   T data;
 
-  /// Creates a new [ReactiveModel] with the given initial [data].
-  ReactiveModel(this.data);
+  /// Creates a new [ObservableValue] with the given initial [data].
+  ObservableValue(this.data);
 
   /// Updates the field with a new value and notifies listeners.
   ///
@@ -22,23 +22,6 @@ class ReactiveModel<T> extends ChangeNotifier {
   /// The [value] parameter will be cast to type [T].
   void updateField(dynamic value) {
     data = value as T;
-    notifyListeners();
-  }
-
-  /// Updates a field using a callback function and then notifies listeners.
-  ///
-  /// This method is useful for updating complex objects where you need to modify
-  /// a specific field or property. The callback receives the current data and
-  /// should perform the necessary updates.
-  ///
-  /// Example:
-  /// ```dart
-  /// model.updateWithCallback((data) {
-  ///   data.someField = newValue;
-  /// });
-  /// ```
-  void updateWithCallback(void Function(T) callback) {
-    callback(data);
     notifyListeners();
   }
 

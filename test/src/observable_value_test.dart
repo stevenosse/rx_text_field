@@ -15,7 +15,7 @@ void main() {
       const initialValue = 'test';
 
       // Act
-      final model = ReactiveModel<String>(initialValue);
+      final model = ObservableValue<String>(initialValue);
 
       // Assert
       expect(model.data, equals(initialValue));
@@ -24,7 +24,7 @@ void main() {
 
     test('should update value and notify listeners', () {
       // Arrange
-      final model = ReactiveModel<String>('initial');
+      final model = ObservableValue<String>('initial');
       var listenerCallCount = 0;
       model.addListener(() {
         listenerCallCount++;
@@ -40,7 +40,7 @@ void main() {
 
     test('should update value using setter and notify listeners', () {
       // Arrange
-      final model = ReactiveModel<String>('initial');
+      final model = ObservableValue<String>('initial');
       var listenerCallCount = 0;
       model.addListener(() {
         listenerCallCount++;
@@ -56,7 +56,7 @@ void main() {
 
     test('should not notify listeners if value is the same', () {
       // Arrange
-      final model = ReactiveModel<String>('initial');
+      final model = ObservableValue<String>('initial');
       var listenerCallCount = 0;
       model.addListener(() {
         listenerCallCount++;
@@ -73,7 +73,7 @@ void main() {
     test('should work with complex objects', () {
       // Arrange
       final loginRequest = TestUser(username: 'user', password: 'pass');
-      final model = ReactiveModel<TestUser>(loginRequest);
+      final model = ObservableValue<TestUser>(loginRequest);
 
       // Act
       final newRequest = TestUser(username: 'newuser', password: 'newpass');
@@ -86,7 +86,7 @@ void main() {
 
     test('toString should return formatted string', () {
       // Arrange
-      final model = ReactiveModel<String>('test');
+      final model = ObservableValue<String>('test');
 
       // Act & Assert
       expect(model.toString(), equals('ReactiveModel(test)'));

@@ -4,8 +4,8 @@ import 'package:rx_text_field/rx_text_field.dart';
 class SimpleFormExample extends StatelessWidget {
   SimpleFormExample({super.key});
 
-  final nameModel = ReactiveModel<String>('');
-  final emailModel = ReactiveModel<String>('');
+  final nameModel = ObservableValue<String>('');
+  final emailModel = ObservableValue<String>('');
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +97,7 @@ class CompoundFormExample extends StatefulWidget {
 }
 
 class _CompoundFormExampleState extends State<CompoundFormExample> {
-  final userModel = ReactiveModel<User>(User());
+  final userModel = ObservableValue<User>(User());
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -207,7 +207,7 @@ class _CompoundFormExampleState extends State<CompoundFormExample> {
 class MapBindingExample extends StatelessWidget {
   MapBindingExample({super.key});
 
-  final mapModel = ReactiveModel<Map<String, String>>({'name': '', 'age': ''});
+  final mapModel = ObservableValue<Map<String, String>>({'name': '', 'age': ''});
 
   @override
   Widget build(BuildContext context) {

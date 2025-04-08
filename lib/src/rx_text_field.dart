@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:ui' as ui;
-import 'reactive_model.dart';
+import 'observable_value.dart';
 
 /// A text field widget that synchronizes with a reactive model.
 ///
@@ -12,7 +12,7 @@ import 'reactive_model.dart';
 /// Type parameter [T] represents the type of data in the reactive model.
 class RxTextField<T> extends StatefulWidget {
   /// The reactive model that this text field is bound to.
-  final ReactiveModel<T> model;
+  final ObservableValue<T> model;
 
   /// A function that extracts a string value from the model data.
   ///
@@ -342,9 +342,8 @@ class _RxTextFieldState<T> extends State<RxTextField<T>> {
     if (_isInternalChange) return;
 
     if (widget.field != null && widget.onChanged != null) {
-      widget.model.updateWithCallback((data) {
-        widget.onChanged!(data, _controller.text);
-      });
+      widget.onChanged!(widget.model.data, _controller.text);
+      widget.model.updateField(widget.model.data);
     } else if (widget.field == null) {
       widget.model.updateField(_controller.text);
     }
