@@ -20,7 +20,7 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  rx_text_field: ^0.0.1
+  rx_text_field: ^0.1.0
 ```
 
 ## Core Components
