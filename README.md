@@ -1,181 +1,154 @@
 # RX Text Field
 
-A reactive text field widget for Flutter that synchronizes with data models. This package provides a simple way to bind text fields to reactive data models, making it easy to create forms that automatically update when the model changes and vice versa.
+A Flutter package providing reactive text field widgets that automatically synchronize with data models. Built for creating forms with automatic two-way data binding.
+
+[![pub package](https://img.shields.io/pub/v/rx_text_field.svg)](https://pub.dev/packages/rx_text_field)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
 
-- **Two-way data binding**: Text fields automatically update when the model changes and update the model when the text field changes
-- **Support for complex objects**: Bind text fields to specific fields in complex objects
-- **Simple API**: Easy to use with minimal boilerplate
-- **Flexible**: Works with any data type, including strings, numbers, custom objects, and maps
+- 🔄 **Two-way Data Binding**: Automatic synchronization between UI and data models <br />
+- 🎯 **Type Safety**: Generic typing for model data  <br />
+- 📋 **Form Support**: Built-in form validation and state management <br />
+- 🔧 **Flexible API**: Works with simple values and complex objects <br />
+- 🎨 **Full Customization**: All standard TextField properties supported <br />
+- ⚡ **Reactive Updates**: Efficient model-based reactivity <br />
 
-## Getting started
+## Installation
 
-Add the package to your `pubspec.yaml` file:
+Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
   rx_text_field: ^0.0.1
 ```
 
-Then run:
+## Core Components
 
-```bash
-flutter pub get
-```
+### ReactiveModel<T>
 
-## Usage
-
-### Simple String Binding
-
-For simple string values, you can bind a text field directly to a `ReactiveModel<String>`:
+A wrapper class that makes any data type reactive:
 
 ```dart
-// Create a reactive model with an initial value
+final model = ReactiveModel<String>('initial value');
+model.value = 'new value'; // Notifies listeners
+```
+
+### RxTextField<T>
+
+A basic reactive text field:
+
+```dart
+RxTextField<String>(
+  model: stringModel,
+  decoration: InputDecoration(labelText: 'Name'),
+)
+```
+
+### RxTextFormField<T>
+
+A form-enabled reactive text field with validation:
+
+```dart
+RxTextFormField<String>(
+  model: emailModel,
+  decoration: InputDecoration(labelText: 'Email'),
+  validator: (value) => value?.contains('@') ?? false 
+    ? null 
+    : 'Invalid email',
+)
+```
+
+## Usage Examples
+
+### Simple string binding
+
+```dart
 final nameModel = ReactiveModel<String>('');
 
-// Bind a text field to the model
-ReactiveTextField(
-  labelText: 'Name',
+RxTextField<String>(
   model: nameModel,
-)
-```
-
-### Complex Object Binding
-
-For complex objects, you can use the `field` and `onChanged` parameters to bind to specific fields:
-
-```dart
-// Create a reactive model with a complex object
-final loginModel = ReactiveModel(LoginRequest(username: '', password: ''));
-
-// Bind a text field to the username field
-ReactiveTextField(
-  labelText: 'Username',
-  model: loginModel,
-  field: (model) => model.username,
-  onChanged: (model, value) => model.username = value,
-)
-
-// Bind a text field to the password field with obscured text
-ReactiveTextField(
-  labelText: 'Password',
-  model: loginModel,
-  field: (model) => model.password,
-  onChanged: (model, value) => model.password = value,
-  obscureText: true,
-)
-```
-
-### Map binding
-
-You can also bind to fields in a Map:
-
-```dart
-// Create a reactive model with a Map
-final mapModel = ReactiveModel({'name': '', 'age': ''});
-
-// Bind a text field to the 'name' field
-ReactiveTextField(
-  labelText: 'Name',
-  model: mapModel,
-  field: (model) => model['name']!,
-  onChanged: (model, value) => model['name'] = value,
-)
-```
-
-### Custom decoration
-
-You can customize the appearance of the text field using the `decoration` parameter:
-
-```dart
-ReactiveTextField(
-  labelText: 'Email',
-  model: emailModel,
   decoration: InputDecoration(
-    labelText: 'Email Address',
-    hintText: 'Enter your email',
-    prefixIcon: Icon(Icons.email),
+    labelText: 'Name',
     border: OutlineInputBorder(),
   ),
 )
 ```
 
-## Complete example
-
-See the `/example` folder for a complete example of how to use the package.
+### Complex object binding
 
 ```dart
-import 'package:flutter/material.dart';
-import 'package:rx_text_field/rx_text_field.dart';
-
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
-
-  @override
-  State<LoginForm> createState() => _LoginFormState();
+class User {
+  String username;
+  String password;
+  User({this.username = '', this.password = ''});
 }
 
-class _LoginFormState extends State<LoginForm> {
-  final loginRequest = ReactiveModel(LoginRequest(username: '', password: ''));
+final userModel = ReactiveModel<User>(User());
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ReactiveTextField(
-            labelText: 'Username',
-            model: loginRequest,
-            field: (model) => model.username,
-            onChanged: (model, value) => model.username = value,
-          ),
-          ReactiveTextField(
-            labelText: 'Password',
-            model: loginRequest,
-            field: (model) => model.password,
-            onChanged: (model, value) => model.password = value,
-            obscureText: true,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              print('Login: ${loginRequest.data}');
-            },
-            child: const Text('Submit'),
-          ),
-        ],
-      ),
-    );
-  }
+RxTextField<User>(
+  model: userModel,
+  field: (user) => user.username,
+  onChanged: (user, value) => user.username = value,
+  decoration: InputDecoration(labelText: 'Username'),
+)
+```
+
+### Form validation
+
+```dart
+final formKey = GlobalKey<FormState>();
+final emailModel = ReactiveModel<String>('');
+
+Form(
+  key: formKey,
+  child: RxTextFormField<String>(
+    model: emailModel,
+    decoration: InputDecoration(labelText: 'Email'),
+    validator: (value) {
+      if (value?.isEmpty ?? true) return 'Email is required';
+      if (!value!.contains('@')) return 'Invalid email format';
+      return null;
+    },
+  ),
+)
+
+// Validate form
+if (formKey.currentState!.validate()) {
+  // Form is valid
 }
 ```
 
-## Additional information
-
-### ReactiveModel
-
-The `ReactiveModel` class is a wrapper around any data type that provides reactive capabilities. It extends `ChangeNotifier` to notify listeners when the data changes.
+### Map binding
 
 ```dart
-// Create a reactive model
-final model = ReactiveModel<String>('initial value');
+final mapModel = ReactiveModel<Map<String, String>>({'name': ''});
 
-// Update the value
-model.updateField('new value');
-
-// Or use the setter
-model.value = 'another value';
-
-// Get the current value
-print(model.value);
+RxTextField<Map<String, String>>(
+  model: mapModel,
+  field: (map) => map['name']!,
+  onChanged: (map, value) => map['name'] = value,
+  decoration: InputDecoration(labelText: 'Name'),
+)
 ```
 
-### Contributing
+## Features and limitations
 
-Contributions are welcome! If you find a bug or want to add a feature, please open an issue or submit a pull request.
+### Supported
+- ✅ Simple value binding
+- ✅ Complex object binding
+- ✅ Form validation
+- ✅ Custom decorations
+- ✅ All standard TextField properties
 
-### License
+### Limitations
+- ⚠️ Model must implement equality for optimal performance
+- ⚠️ Field and onChanged must be provided together for complex objects
 
-This package is licensed under the MIT License - see the LICENSE file for details.
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
