@@ -40,5 +40,5 @@ class ObservableValue<T> extends ChangeNotifier {
   T get value => data;
 
   @override
-  String toString() => 'ReactiveModel($data)';
+  String toString() => 'ObservableValue($data)';
 }

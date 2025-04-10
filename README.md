@@ -25,12 +25,12 @@ dependencies:
 
 ## Core Components
 
-### ReactiveModel<T>
+### ObservableValue<T>
 
 A wrapper class that makes any data type reactive:
 
 ```dart
-final model = ReactiveModel<String>('initial value');
+final model = ObservableValue<String>('initial value');
 model.value = 'new value'; // Notifies listeners
 ```
 
@@ -64,7 +64,7 @@ RxTextFormField<String>(
 ### Simple string binding
 
 ```dart
-final nameModel = ReactiveModel<String>('');
+final nameModel = ObservableValue<String>('');
 
 RxTextField<String>(
   model: nameModel,
@@ -84,7 +84,7 @@ class User {
   User({this.username = '', this.password = ''});
 }
 
-final userModel = ReactiveModel<User>(User());
+final userModel = ObservableValue<User>(User());
 
 RxTextField<User>(
   model: userModel,
@@ -98,7 +98,7 @@ RxTextField<User>(
 
 ```dart
 final formKey = GlobalKey<FormState>();
-final emailModel = ReactiveModel<String>('');
+final emailModel = ObservableValue<String>('');
 
 Form(
   key: formKey,
@@ -122,7 +122,7 @@ if (formKey.currentState!.validate()) {
 ### Map binding
 
 ```dart
-final mapModel = ReactiveModel<Map<String, String>>({'name': ''});
+final mapModel = ObservableValue<Map<String, String>>({'name': ''});
 
 RxTextField<Map<String, String>>(
   model: mapModel,

@@ -207,7 +207,10 @@ class _CompoundFormExampleState extends State<CompoundFormExample> {
 class MapBindingExample extends StatelessWidget {
   MapBindingExample({super.key});
 
-  final mapModel = ObservableValue<Map<String, String>>({'name': '', 'age': ''});
+  final mapModel = ObservableValue<Map<String, String>>({
+    'name': '',
+    'age': '',
+  });
 
   @override
   Widget build(BuildContext context) {

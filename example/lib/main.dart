@@ -33,9 +33,7 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: const SingleChildScrollView(
-        child: LoginForm(),
-      ),
+      body: const SingleChildScrollView(child: LoginForm()),
     );
   }
 }

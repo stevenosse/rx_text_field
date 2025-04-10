@@ -9,7 +9,7 @@ class TestUser {
 }
 
 void main() {
-  group('ReactiveModel', () {
+  group('ObservableValue', () {
     test('should initialize with provided data', () {
       // Arrange
       const initialValue = 'test';
@@ -89,7 +89,7 @@ void main() {
       final model = ObservableValue<String>('test');
 
       // Act & Assert
-      expect(model.toString(), equals('ReactiveModel(test)'));
+      expect(model.toString(), equals('ObservableValue(test)'));
     });
   });
 }

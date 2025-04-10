@@ -1,6 +1,6 @@
 name: rx_text_field
 description: "A reactive text field widget for Flutter that synchronizes with data models."
-version: "0.1.0"
+version: "0.1.1"
 homepage: https://github.com/stevenosse/rx_text_field
 repository: https://github.com/stevenosse/rx_text_field
 issue_tracker: https://github.com/stevenosse/rx_text_field/issues
